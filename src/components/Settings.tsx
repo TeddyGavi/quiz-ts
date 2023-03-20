@@ -44,6 +44,16 @@ const Title = styled.h1`
   padding: 1rem;
 `;
 
+const Button = styled.button`
+  background: ${(props) => (props.primary ? "white" : "black")};
+  color: ${(props) => (props.primary ? "black" : "whtie")};
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em, 1em;
+  border: 2px solid black;
+  border-radius: 3px;
+`;
+
 const BASE_URL = `https://opentdb.com`;
 export default function Settings() {
   const [difficulty, setDifficultly] = useState("Any");
@@ -110,8 +120,10 @@ export default function Settings() {
           <option>Multiple Choice</option>
           <option>True / False</option>
         </SelectOptions>
-        <button type="submit">Start Quiz</button>
-        <button type="submit">Start Default Quiz</button>
+        <Button primary type="submit">
+          Start Quiz
+        </Button>
+        <Button type="submit">Start Default Quiz</Button>
       </Container>
     </form>
   );
