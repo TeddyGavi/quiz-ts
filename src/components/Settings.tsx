@@ -14,15 +14,34 @@ const Container = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
-  margin-top: 25vh;
+  gap: 1rem;
 `;
 
 const SelectOptions = styled.select`
   color: black;
-  font-size: 1.5rem;
+  font-size: 1rem;
   scrollbar-width: thin;
   width: 50%;
+`;
+
+const SimpleInput = styled.input`
+  width: 50%;
+  font-size: 1rem;
+`;
+
+const Label = styled.label`
+  font-size: 1.25rem;
+  font-weight: bold;
+  letter-spacing: 0.025vh;
+  padding: 10px, 0;
+`;
+
+const Title = styled.h1`
+  font-size: 4vh;
+  font-weight: bolder;
+  font-style: italic;
+  margin-bottom: 1rem;
+  padding: 1rem;
 `;
 
 const BASE_URL = `https://opentdb.com`;
@@ -39,8 +58,6 @@ export default function Settings() {
     type: "",
   });
 
-  // console.log(amount);
-
   useEffect(() => {
     fetch(`${BASE_URL}/api_category.php`)
       .then((res) => res.json())
@@ -54,10 +71,14 @@ export default function Settings() {
   const handleAmountSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAmount(+e.target.value);
   };
+
+  const handleSubmitSettings = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
   return (
-    <form>
+    <form action="" method="GET" onSubmit={handleSubmitSettings}>
       <Container>
-        <h1>Select the options for your quiz...</h1>
+        <Title>Select the options for your quiz...</Title>
         {/* <SelectOptions value={amount} onChange={handleAmountSelect}>
           <option>{amount}</option>
           {Array.from({ length: 50 }, (_, i) => i + 1).map((n, i) => (
@@ -66,10 +87,10 @@ export default function Settings() {
             </option>
           ))}
         </SelectOptions> */}
-        <label>How Many Questions? (Max 50) </label>
-        <input type="number" min={1} max={50}></input>
-        <label for="category">Category:</label>
-        <SelectOptions value={category} onSubmit={handleCategorySelect}>
+        <Label htmlFor="amount">How Many Questions? (Max 50) </Label>
+        <SimpleInput type="number" min={1} max={50}></SimpleInput>
+        <Label htmlFor="category">Category:</Label>
+        <SelectOptions value={category} onChange={handleCategorySelect}>
           <option>Any</option>
           {categories &&
             categories.map((cat) => (
@@ -78,6 +99,19 @@ export default function Settings() {
               </option>
             ))}
         </SelectOptions>
+        <Label htmlFor="difficulty"> Difficulty:</Label>
+        <SelectOptions>
+          <option>Easy</option>
+          <option>Medium</option>
+          <option>Hard</option>
+        </SelectOptions>
+        <Label htmlFor="type"> Type:</Label>
+        <SelectOptions>
+          <option>Multiple Choice</option>
+          <option>True / False</option>
+        </SelectOptions>
+        <button type="submit">Start Quiz</button>
+        <button type="submit">Start Default Quiz</button>
       </Container>
     </form>
   );

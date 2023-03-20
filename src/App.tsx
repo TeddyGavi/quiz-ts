@@ -9,7 +9,6 @@ function App() {
   return (
     <React.Fragment>
       <GlobalStyles />
-      <div className="App">Hello</div>
       <Settings />
     </React.Fragment>
   );
