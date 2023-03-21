@@ -14,4 +14,5 @@
 - the CLI is great
 - using styled components to gain more experience with the library
 - starting by fetching the categories form the api and setting up a form to take in the users selection of settings
--
+- thinking of setting up Redux for managing all quiz settings via a simple reducer
+- I can probably not use Redux but it could be a good way to experiment?
