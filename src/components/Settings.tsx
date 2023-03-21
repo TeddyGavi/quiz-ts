@@ -4,7 +4,10 @@ import styled from "styled-components";
 // import { Category } from "open-trivia-db";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { setAmount } from "../features/amount/amountSlice";
+import { setCategory } from "../features/category/categorySlice";
+import { setDifficulty } from "../features/difficulty/difficultySlice";
 import { toggleLoading } from "../features/loading/loadingSlice";
+import { setType } from "../features/type/typeSlice";
 
 type category = {
   id: number;
@@ -81,25 +84,29 @@ const Button = styled.button<ButtonProps>`
 
 const BASE_URL = `https://opentdb.com`;
 export default function Settings() {
-  const [difficulty, setDifficultly] = useState("Any");
+  // const [difficulty, setDifficultly] = useState("Any");
   const [categories, setCategories] = useState<categoryAPI>([]);
-  const [category, setCategory] = useState("Any");
-  const [type, setType] = useState("Any");
+  // const [type, setType] = useState("Any");
   const dispatch = useAppDispatch();
   const loading = useAppSelector((state) => state.loading.loading);
   const amount = useAppSelector((state) => state.amount.amount);
+  const category = useAppSelector((state) => state.category.category);
+  const difficulty = useAppSelector((state) => state.difficulty.difficulty);
+  const type = useAppSelector((state) => state.type.type);
+
   useEffect(() => {
-    dispatch(toggleLoading(false));
+    dispatch(toggleLoading(true));
     fetch(`${BASE_URL}/api_category.php`)
       .then((res) => res.json())
       .then((res) => {
         setCategories(res.trivia_categories);
-        dispatch(toggleLoading(true));
+        dispatch(toggleLoading(false));
       });
   }, []);
 
   const handleCategorySelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setCategory(e.target.value || "Any");
+    const input = e.target.value || "any";
+    dispatch(setCategory(input));
   };
 
   const handleAmountSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -115,14 +122,14 @@ export default function Settings() {
   };
 
   const handleDifficultySelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setDifficultly(e.target.value.toLowerCase());
+    dispatch(setDifficulty(e.target.value.toLowerCase()));
   };
 
   const handleTypeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setType(e.target.value.toLowerCase());
+    dispatch(setType(e.target.value.toLowerCase()));
   };
 
-  if (loading) {
+  if (!loading) {
     return (
       <Container>
         <Title>Select the options for your quiz...</Title>

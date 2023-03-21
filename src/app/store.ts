@@ -1,14 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
 import loadingSlice from "../features/loading/loadingSlice";
 import amountSlice from "../features/amount/amountSlice";
+import categorySlice from "../features/category/categorySlice";
+import difficultySlice from "../features/difficulty/difficultySlice";
+import typeSlice from "../features/type/typeSlice";
 
 export const store = configureStore({
   reducer: {
     loading: loadingSlice,
     amount: amountSlice,
-    // category: categoryReducer,
-    // difficulty: difficultyReducer,
-    // type: typeReducer,
+    category: categorySlice,
+    difficulty: difficultySlice,
+    type: typeSlice,
   },
 });
 
