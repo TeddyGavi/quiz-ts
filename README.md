@@ -23,4 +23,5 @@
 - decided to add redux, mainly to learn about it in a simple use case
 - learning with Mark Erikson linked on the Redux docs
 - this is actually amazing! getting the url builder set up and fetching data and how it prebuilds a react hook to use inside components is great
-- not sure how this works with useEffect? I guess the side effects are contained within the interna wrapper itself
+- not sure how this works with useEffect? I guess the side effects are contained within the internal wrapper itself
+- currently I am making two calls via API slice, one to get categories to be displayed the other is constantly fetching and caching the data of quiz questions on change, this should just be done once on a button click...i may rework this but the createApi is so magically its hard not to want to use it!
