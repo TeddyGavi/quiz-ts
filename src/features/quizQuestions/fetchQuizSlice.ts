@@ -33,11 +33,11 @@ export interface QuizQuestions {
   results: Results[];
 }
 
-interface QuizParams {
-  amount: number;
-  category: string;
-  difficulty: string;
-  type: string;
+export interface QuizParams {
+  amount: number | string;
+  category?: string;
+  difficulty?: string;
+  type?: string;
 }
 
 export const OpenTriviaApiSlice = createApi({

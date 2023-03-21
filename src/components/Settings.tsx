@@ -19,6 +19,7 @@ import {
 } from "./Settings.styled";
 
 import { Button } from "./Button.styled";
+import FetchButton from "./FetchButton";
 
 const BASE_URL = `https://opentdb.com`;
 export default function Settings() {
@@ -101,6 +102,13 @@ export default function Settings() {
         </SelectOptions>
         <ButtonWrapper>
           <Button type="submit">Start Quiz</Button>
+          <FetchButton
+            text={"Start Quiz"}
+            amount={amount}
+            category={category}
+            difficulty={difficulty}
+            type={type}
+          ></FetchButton>
           <Button type="submit">Start Default Quiz</Button>
         </ButtonWrapper>
       </Container>
