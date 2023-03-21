@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface AmountState {
-  amount: number;
+  amount: number | string;
 }
 
 const initAmount: AmountState = {
@@ -12,8 +12,14 @@ const amountSlice = createSlice({
   name: "amount",
   initialState: initAmount,
   reducers: {
-    setAmount(state, action: PayloadAction<number>) {
-      state.amount = action.payload;
+    setAmount(state, action: PayloadAction<number | string>) {
+      if (action.payload < 0) {
+        state.amount = 0;
+      } else if (action.payload > 50) {
+        state.amount = 50;
+      } else {
+        state.amount = action.payload;
+      }
     },
   },
 });

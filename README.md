@@ -21,4 +21,6 @@
 
 - strep throat again!
 - decided to add redux, mainly to learn about it in a simple use case
-- learning with Mark Erikson
+- learning with Mark Erikson linked on the Redux docs
+- this is actually amazing! getting the url builder set up and fetching data and how it prebuilds a react hook to use inside components is great
+- not sure how this works with useEffect? I guess the side effects are contained within the interna wrapper itself

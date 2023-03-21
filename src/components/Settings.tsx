@@ -1,108 +1,47 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-// import { Category } from "open-trivia-db";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { setAmount } from "../features/amount/amountSlice";
 import { setCategory } from "../features/category/categorySlice";
 import { setDifficulty } from "../features/difficulty/difficultySlice";
 import { toggleLoading } from "../features/loading/loadingSlice";
+import { useGetCategoriesQuery } from "../features/quizQuestions/fetchQuizSlice";
 import { setType } from "../features/type/typeSlice";
+import { Category } from "../features/quizQuestions/fetchQuizSlice";
+import {
+  Container,
+  SelectOptions,
+  SimpleInput,
+  Label,
+  Title,
+  ButtonWrapper,
+} from "./Settings.styled";
 
-type category = {
-  id: number;
-  name: string;
-};
-type categoryAPI = category[];
-
-type ButtonProps = {
-  primary?: string;
-};
-
-const Container = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-`;
-
-const SelectOptions = styled.select`
-  color: black;
-  font-size: 1rem;
-  scrollbar-width: thin;
-  width: 80%;
-  height: 2rem;
-  padding: 5px;
-`;
-
-const SimpleInput = styled.input`
-  width: 80%;
-  font-size: 1rem;
-  height: 2rem;
-  padding: 5px;
-`;
-
-const Label = styled.label`
-  font-size: 1.25rem;
-  font-weight: bold;
-  letter-spacing: 0.25vh;
-  padding: 10px, 0;
-  color: antiquewhite;
-`;
-
-const Title = styled.h1`
-  color: ghostwhite;
-  font-size: 4vh;
-  font-weight: bolder;
-  font-style: italic;
-  margin-bottom: 1rem;
-  padding: 1rem;
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  width: 80%;
-  justify-content: space-evenly;
-`;
-
-const Button = styled.button<ButtonProps>`
-  background: ${(props) => (props.primary ? "white" : "black")};
-  color: ${(props) => (props.primary ? "black" : "white")};
-  font-size: 1rem;
-  margin: 1rem;
-  padding: 0.25rem 1rem;
-  border: 2px solid black;
-  border-radius: 3px;
-  font-weight: 900;
-  cursor: pointer;
-  &:hover {
-    color: var(--gray);
-    box-shadow: 0px 0px 5px whitesmoke;
-  }
-`;
+import { Button } from "./Button.styled";
 
 const BASE_URL = `https://opentdb.com`;
 export default function Settings() {
-  // const [difficulty, setDifficultly] = useState("Any");
-  const [categories, setCategories] = useState<categoryAPI>([]);
-  // const [type, setType] = useState("Any");
+  // const [categories, setCategories] = useState<categoryAPI>([]);
   const dispatch = useAppDispatch();
-  const loading = useAppSelector((state) => state.loading.loading);
+  // const loading = useAppSelector((state) => state.loading.loading);
   const amount = useAppSelector((state) => state.amount.amount);
   const category = useAppSelector((state) => state.category.category);
   const difficulty = useAppSelector((state) => state.difficulty.difficulty);
   const type = useAppSelector((state) => state.type.type);
 
-  useEffect(() => {
-    dispatch(toggleLoading(true));
-    fetch(`${BASE_URL}/api_category.php`)
-      .then((res) => res.json())
-      .then((res) => {
-        setCategories(res.trivia_categories);
-        dispatch(toggleLoading(false));
-      });
-  }, []);
+  const { data, isFetching } = useGetCategoriesQuery();
+  const categories: Category[] = data?.trivia_categories || [];
+
+  // useEffect(() => {
+  //   dispatch(toggleLoading(true));
+  //   fetch(`${BASE_URL}/api_category.php`)
+  //     .then((res) => res.json())
+  //     .then((res) => {
+  //       setCategories(res.trivia_categories);
+  //       dispatch(toggleLoading(false));
+  //     });
+  // }, []);
 
   const handleCategorySelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const input = e.target.value || "any";
@@ -111,13 +50,9 @@ export default function Settings() {
 
   const handleAmountSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     let input = Number.isNaN(e.target.valueAsNumber)
-      ? 0
+      ? ""
       : e.target.valueAsNumber || 0;
-    if (input < 0) {
-      input = 0;
-    } else if (input > 50) {
-      input = 50;
-    }
+
     dispatch(setAmount(input));
   };
 
@@ -129,14 +64,14 @@ export default function Settings() {
     dispatch(setType(e.target.value.toLowerCase()));
   };
 
-  if (!loading) {
+  if (!isFetching) {
     return (
       <Container>
         <Title>Select the options for your quiz...</Title>
         <Label htmlFor="amount">How Many Questions? (Max 50) </Label>
         <SimpleInput
           type="number"
-          min={1}
+          min={0}
           max={50}
           value={amount}
           onChange={handleAmountSelect}
