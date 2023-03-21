@@ -16,3 +16,9 @@
 - starting by fetching the categories form the api and setting up a form to take in the users selection of settings
 - thinking of setting up Redux for managing all quiz settings via a simple reducer
 - I can probably not use Redux but it could be a good way to experiment?
+
+### Tuesday March 21st, 2023,
+
+- strep throat again!
+- decided to add redux, mainly to learn about it in a simple use case
+- learning with Mark Erikson

@@ -30,7 +30,7 @@ export const GlobalStyles = createGlobalStyle`
   body {
     margin: 0 auto;
     font-family: var(--font-main);
-    background-image: url("../public/backgroundNeon.jpg");
+    background-image: url("/backgroundNeon.jpg");
     background-size: 100% 100%;
     color: var(--black);
     max-width: var(--max-width);

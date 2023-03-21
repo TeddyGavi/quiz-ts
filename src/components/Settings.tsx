@@ -2,6 +2,9 @@ import React from "react";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 // import { Category } from "open-trivia-db";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { setAmount } from "../features/amount/amountSlice";
+import { toggleLoading } from "../features/loading/loadingSlice";
 
 type category = {
   id: number;
@@ -82,18 +85,17 @@ export default function Settings() {
   const [categories, setCategories] = useState<categoryAPI>([]);
   const [category, setCategory] = useState("Any");
   const [type, setType] = useState("Any");
-  const [amount, setAmount] = useState(0);
-  const [options, setOptions] = useState({
-    amount: undefined,
-    category: "",
-    difficulty: "",
-    type: "",
-  });
-
+  const dispatch = useAppDispatch();
+  const loading = useAppSelector((state) => state.loading.loading);
+  const amount = useAppSelector((state) => state.amount.amount);
   useEffect(() => {
+    dispatch(toggleLoading(false));
     fetch(`${BASE_URL}/api_category.php`)
       .then((res) => res.json())
-      .then((res) => setCategories(res.trivia_categories));
+      .then((res) => {
+        setCategories(res.trivia_categories);
+        dispatch(toggleLoading(true));
+      });
   }, []);
 
   const handleCategorySelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -109,7 +111,7 @@ export default function Settings() {
     } else if (input > 50) {
       input = 50;
     }
-    setAmount(input);
+    dispatch(setAmount(input));
   };
 
   const handleDifficultySelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -120,44 +122,52 @@ export default function Settings() {
     setType(e.target.value.toLowerCase());
   };
 
-  return (
-    <Container>
-      <Title>Select the options for your quiz...</Title>
-      <Label htmlFor="amount">How Many Questions? (Max 50) </Label>
-      <SimpleInput
-        type="number"
-        min={1}
-        max={50}
-        value={amount}
-        onChange={handleAmountSelect}
-      ></SimpleInput>
-      <Label htmlFor="category">Category:</Label>
-      <SelectOptions value={category} onChange={handleCategorySelect}>
-        <option>Any</option>
-        {categories &&
-          categories.map((cat) => (
-            <option value={cat.id} key={cat.id}>
-              {cat.name}
-            </option>
-          ))}
-      </SelectOptions>
-      <Label htmlFor="difficulty"> Difficulty:</Label>
-      <SelectOptions value={difficulty} onChange={handleDifficultySelect}>
-        <option>Any</option>
-        <option>Easy</option>
-        <option>Medium</option>
-        <option>Hard</option>
-      </SelectOptions>
-      <Label htmlFor="type"> Type:</Label>
-      <SelectOptions value={type} onChange={handleTypeSelect}>
-        <option>Any</option>
-        <option value={`multiple`}>Multiple Choice</option>
-        <option value={`boolean`}>True / False</option>
-      </SelectOptions>
-      <ButtonWrapper>
-        <Button type="submit">Start Quiz</Button>
-        <Button type="submit">Start Default Quiz</Button>
-      </ButtonWrapper>
-    </Container>
-  );
+  if (loading) {
+    return (
+      <Container>
+        <Title>Select the options for your quiz...</Title>
+        <Label htmlFor="amount">How Many Questions? (Max 50) </Label>
+        <SimpleInput
+          type="number"
+          min={1}
+          max={50}
+          value={amount}
+          onChange={handleAmountSelect}
+        ></SimpleInput>
+        <Label htmlFor="category">Category:</Label>
+        <SelectOptions value={category} onChange={handleCategorySelect}>
+          <option>Any</option>
+          {categories &&
+            categories.map((cat) => (
+              <option value={cat.id} key={cat.id}>
+                {cat.name}
+              </option>
+            ))}
+        </SelectOptions>
+        <Label htmlFor="difficulty"> Difficulty:</Label>
+        <SelectOptions value={difficulty} onChange={handleDifficultySelect}>
+          <option>Any</option>
+          <option>Easy</option>
+          <option>Medium</option>
+          <option>Hard</option>
+        </SelectOptions>
+        <Label htmlFor="type"> Type:</Label>
+        <SelectOptions value={type} onChange={handleTypeSelect}>
+          <option>Any</option>
+          <option value={`multiple`}>Multiple Choice</option>
+          <option value={`boolean`}>True / False</option>
+        </SelectOptions>
+        <ButtonWrapper>
+          <Button type="submit">Start Quiz</Button>
+          <Button type="submit">Start Default Quiz</Button>
+        </ButtonWrapper>
+      </Container>
+    );
+  } else {
+    return (
+      <Container>
+        <Title>LOADING...</Title>
+      </Container>
+    );
+  }
 }

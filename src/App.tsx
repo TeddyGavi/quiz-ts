@@ -10,6 +10,11 @@ const Main = styled.main`
   justify-content: center;
   align-items: center;
   height: 100vh;
+
+  @media only screen and (max-width: 420px) {
+    width: 60vw;
+    margin: 0 auto;
+  }
 `;
 
 function App() {
