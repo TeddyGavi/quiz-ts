@@ -6,6 +6,9 @@ export const Container = styled.section`
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  @media only screen and (max-width: 420px) {
+    width: 100%;
+  }
 `;
 
 export const SelectOptions = styled.select`

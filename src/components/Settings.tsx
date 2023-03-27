@@ -6,9 +6,9 @@ import { setAmount } from "../features/amount/amountSlice";
 import { setCategory } from "../features/category/categorySlice";
 import { setDifficulty } from "../features/difficulty/difficultySlice";
 import { toggleLoading } from "../features/loading/loadingSlice";
-import { useGetCategoriesQuery } from "../features/quizQuestions/fetchQuizSlice";
+import { useGetCategoriesQuery } from "../features/api/fetchQuizSlice";
 import { setType } from "../features/type/typeSlice";
-import { Category } from "../features/quizQuestions/fetchQuizSlice";
+import { Category } from "../features/api/fetchQuizSlice";
 import {
   Container,
   SelectOptions,
@@ -89,19 +89,26 @@ export default function Settings() {
         </SelectOptions>
         <Label htmlFor="difficulty"> Difficulty:</Label>
         <SelectOptions value={difficulty} onChange={handleDifficultySelect}>
-          <option>Any</option>
-          <option>Easy</option>
-          <option>Medium</option>
-          <option>Hard</option>
+          <option value="" key="0">
+            Any
+          </option>
+          <option value="easy" key="1">
+            Easy
+          </option>
+          <option value="medium" key="2">
+            Medium
+          </option>
+          <option value="hard" key="3">
+            Hard
+          </option>
         </SelectOptions>
         <Label htmlFor="type"> Type:</Label>
         <SelectOptions value={type} onChange={handleTypeSelect}>
           <option>Any</option>
-          <option value={`multiple`}>Multiple Choice</option>
-          <option value={`boolean`}>True / False</option>
+          <option value="multiple">Multiple Choice</option>
+          <option value="boolean">True / False</option>
         </SelectOptions>
         <ButtonWrapper>
-          <Button type="submit">Start Quiz</Button>
           <FetchButton
             text={"Start Quiz"}
             amount={amount}
@@ -109,7 +116,6 @@ export default function Settings() {
             difficulty={difficulty}
             type={type}
           ></FetchButton>
-          <Button type="submit">Start Default Quiz</Button>
         </ButtonWrapper>
       </Container>
     );

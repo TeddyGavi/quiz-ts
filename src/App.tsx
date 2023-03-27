@@ -12,7 +12,7 @@ const Main = styled.main`
   height: 100vh;
 
   @media only screen and (max-width: 420px) {
-    width: 60vw;
+    max-width: 60vw;
     margin: 0 auto;
   }
 `;

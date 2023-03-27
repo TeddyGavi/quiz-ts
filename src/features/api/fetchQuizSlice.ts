@@ -60,5 +60,5 @@ export const OpenTriviaApiSlice = createApi({
   }),
 });
 
-// builds a hook based on options passed to endpint builder! super cool
+// builds a hook based on options passed to endpoint builder! super cool
 export const { useGetCategoriesQuery, useGetQuizQuery } = OpenTriviaApiSlice;
