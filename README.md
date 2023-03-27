@@ -25,3 +25,10 @@
 - this is actually amazing! getting the url builder set up and fetching data and how it prebuilds a react hook to use inside components is great
 - not sure how this works with useEffect? I guess the side effects are contained within the internal wrapper itself
 - currently I am making two calls via API slice, one to get categories to be displayed the other is constantly fetching and caching the data of quiz questions on change, this should just be done once on a button click...i may rework this but the createApi is so magically its hard not to want to use it!
+
+### Sunday March 26th, 2023,
+
+- been a while...working on take home assignment
+- got a game plan for navigating question component
+- set up a slice to keep track of question index and use that to render the proper question component or the settings pages or a final page from the App file.
+- still not happy with running the api query to get the quiz q's on every change of the selects...works for now but maybe I could use react hook form or some other way to fetch and cache data with RTK...?
