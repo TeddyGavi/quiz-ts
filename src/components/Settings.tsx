@@ -8,7 +8,7 @@ import { setDifficulty } from "../features/difficulty/difficultySlice";
 import { toggleLoading } from "../features/loading/loadingSlice";
 import { useGetCategoriesQuery } from "../features/api/fetchQuizSlice";
 import { setType } from "../features/type/typeSlice";
-import { Category } from "../features/api/fetchQuizSlice";
+import { Category, CategoryAPI } from "../features/api/fetchQuizSlice";
 import {
   Container,
   SelectOptions,
@@ -19,10 +19,10 @@ import {
 } from "./Settings.styled";
 
 import { Button } from "./Button.styled";
-import FetchButton from "./FetchButton";
+import StartButton from "./ActionButton";
 
 const BASE_URL = `https://opentdb.com`;
-export default function Settings() {
+export default function Settings({ trivia_categories }: CategoryAPI) {
   // const [categories, setCategories] = useState<categoryAPI>([]);
   const dispatch = useAppDispatch();
   // const loading = useAppSelector((state) => state.loading.loading);
@@ -31,8 +31,7 @@ export default function Settings() {
   const difficulty = useAppSelector((state) => state.difficulty.difficulty);
   const type = useAppSelector((state) => state.type.type);
 
-  const { data, isFetching } = useGetCategoriesQuery();
-  const categories: Category[] = data?.trivia_categories || [];
+  // const categories: Category[] = data?.trivia_categories || [];
 
   // useEffect(() => {
   //   dispatch(toggleLoading(true));
@@ -65,65 +64,51 @@ export default function Settings() {
     dispatch(setType(e.target.value.toLowerCase()));
   };
 
-  if (!isFetching) {
-    return (
-      <Container>
-        <Title>Select the options for your quiz...</Title>
-        <Label htmlFor="amount">How Many Questions? (Max 50) </Label>
-        <SimpleInput
-          type="number"
-          min={0}
-          max={50}
-          value={amount}
-          onChange={handleAmountSelect}
-        ></SimpleInput>
-        <Label htmlFor="category">Category:</Label>
-        <SelectOptions value={category} onChange={handleCategorySelect}>
-          <option>Any</option>
-          {categories &&
-            categories.map((cat) => (
-              <option value={cat.id} key={cat.id}>
-                {cat.name}
-              </option>
-            ))}
-        </SelectOptions>
-        <Label htmlFor="difficulty"> Difficulty:</Label>
-        <SelectOptions value={difficulty} onChange={handleDifficultySelect}>
-          <option value="" key="0">
-            Any
-          </option>
-          <option value="easy" key="1">
-            Easy
-          </option>
-          <option value="medium" key="2">
-            Medium
-          </option>
-          <option value="hard" key="3">
-            Hard
-          </option>
-        </SelectOptions>
-        <Label htmlFor="type"> Type:</Label>
-        <SelectOptions value={type} onChange={handleTypeSelect}>
-          <option>Any</option>
-          <option value="multiple">Multiple Choice</option>
-          <option value="boolean">True / False</option>
-        </SelectOptions>
-        <ButtonWrapper>
-          <FetchButton
-            text={"Start Quiz"}
-            amount={amount}
-            category={category}
-            difficulty={difficulty}
-            type={type}
-          ></FetchButton>
-        </ButtonWrapper>
-      </Container>
-    );
-  } else {
-    return (
-      <Container>
-        <Title>LOADING...</Title>
-      </Container>
-    );
-  }
+  return (
+    <Container>
+      <Title>Select the options for your quiz...</Title>
+      <Label htmlFor="amount">How Many Questions? (Max 50) </Label>
+      <SimpleInput
+        type="number"
+        min={0}
+        max={50}
+        value={amount}
+        onChange={handleAmountSelect}
+      ></SimpleInput>
+      <Label htmlFor="category">Category:</Label>
+      <SelectOptions value={category} onChange={handleCategorySelect}>
+        <option>Any</option>
+        {trivia_categories &&
+          trivia_categories.map((cat) => (
+            <option value={cat.id} key={cat.id}>
+              {cat.name}
+            </option>
+          ))}
+      </SelectOptions>
+      <Label htmlFor="difficulty"> Difficulty:</Label>
+      <SelectOptions value={difficulty} onChange={handleDifficultySelect}>
+        <option value="" key="0">
+          Any
+        </option>
+        <option value="easy" key="1">
+          Easy
+        </option>
+        <option value="medium" key="2">
+          Medium
+        </option>
+        <option value="hard" key="3">
+          Hard
+        </option>
+      </SelectOptions>
+      <Label htmlFor="type"> Type:</Label>
+      <SelectOptions value={type} onChange={handleTypeSelect}>
+        <option>Any</option>
+        <option value="multiple">Multiple Choice</option>
+        <option value="boolean">True / False</option>
+      </SelectOptions>
+      <ButtonWrapper>
+        <StartButton text={"Start Quiz"}></StartButton>
+      </ButtonWrapper>
+    </Container>
+  );
 }

@@ -14,7 +14,7 @@ export const store = configureStore({
     category: categorySlice,
     difficulty: difficultySlice,
     type: typeSlice,
-    index: indexSlice,
+    questionIndex: indexSlice,
     [OpenTriviaApiSlice.reducerPath]: OpenTriviaApiSlice.reducer,
   },
   // setting up middleware to expand and take on the new fetching slices, cache lifetimes

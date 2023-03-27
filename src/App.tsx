@@ -1,8 +1,17 @@
-import { useState } from "react";
+import { Component, useState } from "react";
+import { useAppDispatch, useAppSelector } from "./app/hooks";
 import React from "react";
 import { GlobalStyles } from "./styles/GlobalStyles";
 import Settings from "./components/Settings";
 import styled from "styled-components";
+import QuizQuestion from "./components/QuizQuestion";
+import {
+  Category,
+  CategoryAPI,
+  useGetCategoriesQuery,
+  useGetQuizQuery,
+} from "./features/api/fetchQuizSlice";
+import { Container, Title } from "./components/Settings.styled";
 
 const Main = styled.main`
   display: flex;
@@ -18,14 +27,46 @@ const Main = styled.main`
 `;
 
 function App() {
-  return (
-    <React.Fragment>
-      <GlobalStyles />
-      <Main>
-        <Settings />
-      </Main>
-    </React.Fragment>
-  );
+  const dispatch = useAppDispatch();
+  const questionIndex = useAppSelector((state) => state.questionIndex.qIndex);
+  // const {data} = useGetQuizQuery()
+  // const questionsArr = useAppSelector((state) => state.api);
+  // console.log(questionsArr);
+  const amount = useAppSelector((state) => state.amount.amount);
+  const category = useAppSelector((state) => state.category.category);
+  const difficulty = useAppSelector((state) => state.difficulty.difficulty);
+  const type = useAppSelector((state) => state.type.type);
+  const { data, isFetching, isSuccess } = useGetCategoriesQuery();
+
+  const trivia_categories: Category[] = data?.trivia_categories || [];
+
+  if (!isFetching && isSuccess) {
+    let page: React.FunctionComponentElement<Component> = (
+      <Title>LOADING...</Title>
+    );
+    let navButtons: React.FunctionComponent<Component>;
+
+    if (questionIndex < 0) {
+      page = <Settings trivia_categories={trivia_categories} />;
+    } else if (questionIndex >= 0) {
+      page = <QuizQuestion {...{ amount, category, difficulty, type }} />;
+    } else if (questionIndex === 0) {
+      page = <></>;
+    }
+
+    return (
+      <React.Fragment>
+        <GlobalStyles />
+        <Main>{page}</Main>
+      </React.Fragment>
+    );
+  } else {
+    return (
+      <Container>
+        <Title>LOADING...</Title>
+      </Container>
+    );
+  }
 }
 
 export default App;

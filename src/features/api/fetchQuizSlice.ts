@@ -50,7 +50,6 @@ export const OpenTriviaApiSlice = createApi({
     getQuiz: build.query<QuizQuestions, QuizParams>({
       query: (arg) => {
         const { amount, category, difficulty, type } = arg;
-        console.log(amount, category, difficulty, type);
         return {
           url: `/api.php`,
           params: { amount, category, difficulty, type },

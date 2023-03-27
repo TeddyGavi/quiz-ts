@@ -9,7 +9,7 @@ interface indexState {
 }
 
 const initQIndex: indexState = {
-  qIndex: 0,
+  qIndex: -1,
 };
 
 const qIndexSice = createSlice({
