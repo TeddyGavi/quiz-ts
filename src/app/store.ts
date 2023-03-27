@@ -6,6 +6,8 @@ import difficultySlice from "../features/difficulty/difficultySlice";
 import typeSlice from "../features/type/typeSlice";
 import { OpenTriviaApiSlice } from "../features/api/fetchQuizSlice";
 import indexSlice from "../features/questionIndex/indexSlice";
+import scoreSlice from "../features/score/scoreSlice";
+import selectedSlice from "../features/selectedAnswer.ts/selectedSlice";
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +17,8 @@ export const store = configureStore({
     difficulty: difficultySlice,
     type: typeSlice,
     questionIndex: indexSlice,
+    score: scoreSlice,
+    selected: selectedSlice,
     [OpenTriviaApiSlice.reducerPath]: OpenTriviaApiSlice.reducer,
   },
   // setting up middleware to expand and take on the new fetching slices, cache lifetimes

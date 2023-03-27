@@ -6,6 +6,7 @@ export const Container = styled.section`
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  max-width: 80%;
   @media only screen and (max-width: 420px) {
     width: 100%;
   }

@@ -1,8 +1,4 @@
-import {
-  createSlice,
-  ActionCreatorWithoutPayload,
-  PayloadAction,
-} from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface indexState {
   qIndex: number;
