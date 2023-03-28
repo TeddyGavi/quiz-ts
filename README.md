@@ -45,3 +45,6 @@
 - refactored A LOT of code
 - still have dome redundancy
 - useMemo to stop the answer list from being re-rendered...only when the index of the question you are on changes
+- handling error states is messy currently
+- NOTICED a bug where if you request one question the app proceeds to end the quiz immediately, I am sure this is linked to how i am handling the index navigation,
+- thats all for now!

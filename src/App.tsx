@@ -46,7 +46,7 @@ function App() {
       page = <Settings trivia_categories={trivia_categories} />;
     } else if (questionIndex >= 0 && questionIndex + 1 !== +amount) {
       page = <QuizQuestion />;
-    } else if (questionIndex + 1 === +amount) {
+    } else {
       page = <FinalScreen />;
     }
 
