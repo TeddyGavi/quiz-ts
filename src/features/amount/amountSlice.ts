@@ -1,12 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface AmountState {
+type AmountState = {
   amount: number | string;
-}
-
-const initAmount: AmountState = {
-  amount: 10,
 };
+
+const initAmount: AmountState = { amount: 10 };
 
 const amountSlice = createSlice({
   name: "amount",

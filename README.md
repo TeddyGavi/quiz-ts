@@ -32,3 +32,16 @@
 - got a game plan for navigating question component
 - set up a slice to keep track of question index and use that to render the proper question component or the settings pages or a final page from the App file.
 - still not happy with running the api query to get the quiz q's on every change of the selects...works for now but maybe I could use react hook form or some other way to fetch and cache data with RTK...?
+
+### Monday March 27th, 2023,
+
+- battling managing the cached state of the api calls and local state and issues where the cached data is being updated even when it doesn't need to be...
+- I think there is a way to use local state to simply some things and move global state for certain attributes
+- api calls it makes sense if i can understand it....
+- currently selected answer doesn't only makes sense to keep that locally
+
+### Tuesday March 28th, 2023
+
+- refactored A LOT of code
+- still have dome redundancy
+- useMemo to stop the answer list from being re-rendered...only when the index of the question you are on changes

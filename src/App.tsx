@@ -4,13 +4,8 @@ import React from "react";
 import { GlobalStyles } from "./styles/GlobalStyles";
 import Settings from "./components/Settings";
 import styled from "styled-components";
-import QuizQuestion from "./components/QuizQuestion";
-import {
-  Category,
-  CategoryAPI,
-  useGetCategoriesQuery,
-  useGetQuizQuery,
-} from "./features/api/fetchQuizSlice";
+import QuizQuestion from "./components/Quiz";
+import { Category, useGetCategoriesQuery } from "./features/api/fetchQuizSlice";
 import { Container, Title } from "./components/Settings.styled";
 
 const Main = styled.main`
@@ -32,10 +27,10 @@ function App() {
   // const {data} = useGetQuizQuery()
   // const questionsArr = useAppSelector((state) => state.api);
   // console.log(questionsArr);
-  const amount = useAppSelector((state) => state.amount.amount);
-  const category = useAppSelector((state) => state.category.category);
-  const difficulty = useAppSelector((state) => state.difficulty.difficulty);
-  const type = useAppSelector((state) => state.type.type);
+  // const amount = useAppSelector((state) => state.amount.amount);
+  // const category = useAppSelector((state) => state.category.category);
+  // const difficulty = useAppSelector((state) => state.difficulty.difficulty);
+  // const type = useAppSelector((state) => state.type.type);
   const { data, isFetching, isSuccess } = useGetCategoriesQuery();
 
   const trivia_categories: Category[] = data?.trivia_categories || [];
@@ -44,12 +39,12 @@ function App() {
     let page: React.FunctionComponentElement<Component> = (
       <Title>LOADING...</Title>
     );
-    let navButtons: React.FunctionComponent<Component>;
+    // let navButtons: React.FunctionComponent<Component>;
 
     if (questionIndex < 0) {
       page = <Settings trivia_categories={trivia_categories} />;
     } else if (questionIndex >= 0) {
-      page = <QuizQuestion {...{ amount, category, difficulty, type }} />;
+      page = <QuizQuestion />;
     } else if (questionIndex === 0) {
       page = <></>;
     }

@@ -4,10 +4,16 @@ interface TitleProps {
   size?: number;
   max?: number;
 }
+
+interface ChoiceProps {
+  selected?: boolean;
+}
+
 export const QuestionTitle = styled.h4<TitleProps>`
   color: ghostwhite;
   font-size: ${(props) => (props.size ? `${props.size}vh` : `2vh`)};
   letter-spacing: 0.5vh;
+  text-align: center;
   @media only screen and (max-width: 420px) {
     font-size: unset;
   }
@@ -24,7 +30,7 @@ export const QuestionOptions = styled.div<TitleProps>`
   }
 `;
 
-export const ChoiceWrapper = styled.div`
+export const ChoiceWrapper = styled.ul`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -33,7 +39,7 @@ export const ChoiceWrapper = styled.div`
   gap: 0.5rem;
 `;
 
-export const Choice = styled.button`
+export const Choice = styled.li<ChoiceProps>`
   width: 80%;
   font: inherit;
   background-color: var(--darkPink);
@@ -51,4 +57,11 @@ export const Choice = styled.button`
     box-shadow: 0px 0px 5px var(--white);
     font-weight: bold;
   }
+
+  ${({ selected }) =>
+    selected &&
+    `background-color: var(--neonPink);
+    cursor: pointer;
+    box-shadow: 0px 0px 5px var(--white);
+    font-weight: bold;`}
 `;
