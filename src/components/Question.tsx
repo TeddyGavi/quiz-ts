@@ -11,12 +11,11 @@ import parse from "html-react-parser";
 import { ButtonWrapper, Container } from "./Settings.styled";
 import { plusOne } from "../features/score/scoreSlice";
 import { Button } from "./Button.styled";
-import { increment } from "../features/questionIndex/indexSlice";
+import { increment, reset } from "../features/questionIndex/indexSlice";
 import { Results } from "../features/api/fetchQuizSlice";
-import { SingleQuestion } from "./Quiz";
 import ActionButton from "./ActionButton";
 
-export default function Question(currentQuestion: SingleQuestion) {
+export default function Question(currentQuestion: Results) {
   const dispatch = useAppDispatch();
   const score = useAppSelector((state) => state.score.score);
   const questionIndex = useAppSelector((state) => state.questionIndex.qIndex);
@@ -35,24 +34,24 @@ export default function Question(currentQuestion: SingleQuestion) {
       setTimeout(() => {
         dispatch(plusOne());
         dispatch(increment());
+        setSelected("");
       }, 2500);
     } else {
       toast("Wrong! Better luck next time");
       setTimeout(() => {
-        dispatch(plusOne());
         dispatch(increment());
+        setSelected("");
       }, 2500);
     }
   };
 
   const memoQuestion = useMemo(() => {
-    const correct = currentQuestion.correct_answer;
-    const wrong = [...currentQuestion.incorrect_answers];
     const type = currentQuestion.type;
-
     if (type === "boolean") {
       return ["True", "False"];
     } else {
+      const correct = currentQuestion.correct_answer;
+      const wrong = [...currentQuestion.incorrect_answers];
       const rand = Math.floor(Math.random() * wrong.length);
       wrong.splice(rand, 0, correct);
       return wrong;
@@ -87,6 +86,7 @@ export default function Question(currentQuestion: SingleQuestion) {
         <ActionButton text={"Skip Question"}></ActionButton>
       </ButtonWrapper>
       <QuestionTitle size={2}>Correct Answers: {score}</QuestionTitle>
+      <ActionButton text={"Rest Quiz"} action={reset}></ActionButton>
     </Container>
   );
 }

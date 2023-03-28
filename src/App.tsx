@@ -7,6 +7,7 @@ import styled from "styled-components";
 import QuizQuestion from "./components/Quiz";
 import { Category, useGetCategoriesQuery } from "./features/api/fetchQuizSlice";
 import { Container, Title } from "./components/Settings.styled";
+import FinalScreen from "./components/FinalScreen";
 
 const Main = styled.main`
   display: flex;
@@ -27,7 +28,7 @@ function App() {
   // const {data} = useGetQuizQuery()
   // const questionsArr = useAppSelector((state) => state.api);
   // console.log(questionsArr);
-  // const amount = useAppSelector((state) => state.amount.amount);
+  const amount = useAppSelector((state) => state.amount.amount);
   // const category = useAppSelector((state) => state.category.category);
   // const difficulty = useAppSelector((state) => state.difficulty.difficulty);
   // const type = useAppSelector((state) => state.type.type);
@@ -43,10 +44,10 @@ function App() {
 
     if (questionIndex < 0) {
       page = <Settings trivia_categories={trivia_categories} />;
-    } else if (questionIndex >= 0) {
+    } else if (questionIndex >= 0 && questionIndex + 1 !== +amount) {
       page = <QuizQuestion />;
-    } else if (questionIndex === 0) {
-      page = <></>;
+    } else if (questionIndex + 1 === +amount) {
+      page = <FinalScreen />;
     }
 
     return (

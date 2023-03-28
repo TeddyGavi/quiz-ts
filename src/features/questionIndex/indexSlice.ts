@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAction, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import scoreSlice, { scoreActions } from "../score/scoreSlice";
 
 interface indexState {
   qIndex: number;
@@ -8,7 +9,9 @@ const initQIndex: indexState = {
   qIndex: -1,
 };
 
-const qIndexSice = createSlice({
+// const increment = createAction<void>("increment")
+
+const qIndexSlice = createSlice({
   name: "qIndex",
   initialState: initQIndex,
   reducers: {
@@ -23,10 +26,18 @@ const qIndexSice = createSlice({
       }
     },
     reset(state, action: PayloadAction<void>) {
+      state.qIndex = -1;
+    },
+    startOver(state, action: PayloadAction<void>) {
       state.qIndex = 0;
     },
   },
+  extraReducers(builder) {
+    builder.addCase(scoreActions.reset, (state) => {
+      state.qIndex = -1;
+    });
+  },
 });
-
-export const { increment, decrement, reset } = qIndexSice.actions;
-export default qIndexSice.reducer;
+export const indexActions = qIndexSlice.actions;
+export const { increment, decrement, reset, startOver } = qIndexSlice.actions;
+export default qIndexSlice.reducer;

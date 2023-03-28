@@ -19,7 +19,7 @@ import {
 } from "./Settings.styled";
 
 import { Button } from "./Button.styled";
-import StartButton from "./ActionButton";
+import ActionButton from "./ActionButton";
 
 const BASE_URL = `https://opentdb.com`;
 export default function Settings({ trivia_categories }: CategoryAPI) {
@@ -107,7 +107,7 @@ export default function Settings({ trivia_categories }: CategoryAPI) {
         <option value="boolean">True / False</option>
       </SelectOptions>
       <ButtonWrapper>
-        <StartButton text={"Start Quiz"}></StartButton>
+        <ActionButton text={"Start Quiz"}></ActionButton>
       </ButtonWrapper>
     </Container>
   );

@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+interface TitleProps {
+  textAlign?: string;
+}
+
 export const Container = styled.section`
   display: flex;
   flex-direction: column;
@@ -36,13 +40,14 @@ export const Label = styled.label`
   color: antiquewhite;
 `;
 
-export const Title = styled.h1`
+export const Title = styled.h1<TitleProps>`
   color: ghostwhite;
   font-size: 4vh;
   font-weight: bolder;
   font-style: italic;
   margin-bottom: 1rem;
   padding: 1rem;
+  ${({ textAlign }) => textAlign && `text-align: center;`}
 `;
 
 export const ButtonWrapper = styled.div`
