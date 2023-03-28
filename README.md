@@ -3,7 +3,7 @@
 ## GOALS
 
 - simple SPA where you first select options for a quiz, then you are directed through the Quiz of your options one question at a time
-- Users and chose defaults if they want (10 random questions)
+- Users can chose defaults if they want (10 random questions)
 - using Open [Trivia DB API](https://opentdb.com/)
 
 ## Documenting the process

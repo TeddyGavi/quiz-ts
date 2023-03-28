@@ -1,14 +1,10 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { setAmount } from "../features/amount/amountSlice";
 import { setCategory } from "../features/category/categorySlice";
 import { setDifficulty } from "../features/difficulty/difficultySlice";
-import { toggleLoading } from "../features/loading/loadingSlice";
-import { useGetCategoriesQuery } from "../features/api/fetchQuizSlice";
 import { setType } from "../features/type/typeSlice";
-import { Category, CategoryAPI } from "../features/api/fetchQuizSlice";
+import { CategoryAPI } from "../features/api/fetchQuizSlice";
 import {
   Container,
   SelectOptions,
@@ -18,30 +14,15 @@ import {
   ButtonWrapper,
 } from "./Settings.styled";
 
-import { Button } from "./Button.styled";
 import ActionButton from "./ActionButton";
 
 const BASE_URL = `https://opentdb.com`;
 export default function Settings({ trivia_categories }: CategoryAPI) {
-  // const [categories, setCategories] = useState<categoryAPI>([]);
   const dispatch = useAppDispatch();
-  // const loading = useAppSelector((state) => state.loading.loading);
   const amount = useAppSelector((state) => state.amount.amount);
   const category = useAppSelector((state) => state.category.category);
   const difficulty = useAppSelector((state) => state.difficulty.difficulty);
   const type = useAppSelector((state) => state.type.type);
-
-  // const categories: Category[] = data?.trivia_categories || [];
-
-  // useEffect(() => {
-  //   dispatch(toggleLoading(true));
-  //   fetch(`${BASE_URL}/api_category.php`)
-  //     .then((res) => res.json())
-  //     .then((res) => {
-  //       setCategories(res.trivia_categories);
-  //       dispatch(toggleLoading(false));
-  //     });
-  // }, []);
 
   const handleCategorySelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const input = e.target.value || "any";
@@ -49,9 +30,10 @@ export default function Settings({ trivia_categories }: CategoryAPI) {
   };
 
   const handleAmountSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let input = Number.isNaN(e.target.valueAsNumber)
-      ? ""
-      : e.target.valueAsNumber || 0;
+    let input =
+      Number.isNaN(e.target.valueAsNumber) || 0
+        ? ""
+        : e.target.valueAsNumber || 0;
 
     dispatch(setAmount(input));
   };

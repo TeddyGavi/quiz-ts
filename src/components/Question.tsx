@@ -30,14 +30,18 @@ export default function Question(currentQuestion: Results) {
   };
   const handleSubmitAnswer = () => {
     if (selected === currentQuestion.correct_answer) {
-      toast("Right! Ready for the next Question?");
+      questionIndex + 1 === +amount
+        ? toast("Finished strong, nice!")
+        : toast("Right! Ready for the next Question?");
       setTimeout(() => {
         dispatch(plusOne());
         dispatch(increment());
         setSelected("");
       }, 2500);
     } else {
-      toast("Wrong! Better luck next time");
+      questionIndex + 1 === +amount
+        ? toast("Uh oh!")
+        : toast("Wrong! Better luck next time");
       setTimeout(() => {
         dispatch(increment());
         setSelected("");
@@ -86,7 +90,7 @@ export default function Question(currentQuestion: Results) {
         <ActionButton text={"Skip Question"}></ActionButton>
       </ButtonWrapper>
       <QuestionTitle size={2}>Correct Answers: {score}</QuestionTitle>
-      <ActionButton text={"Rest Quiz"} action={reset}></ActionButton>
+      <ActionButton text={"Reset Quiz"} action={reset}></ActionButton>
     </Container>
   );
 }
