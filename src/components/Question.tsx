@@ -23,13 +23,13 @@ export default function Question(currentQuestion: Results) {
 
   const [selected, setSelected] = useState("");
   const [correct, setCorrect] = useState("");
-  const [incorrect, setIncorrect] = useState(false);
 
   const handleSelectAnswer = (
     e: React.MouseEvent<HTMLLIElement, MouseEvent>
   ) => {
     setSelected(e.currentTarget.innerText);
   };
+
   const handleSubmitAnswer = () => {
     if (selected === currentQuestion.correct_answer) {
       questionIndex + 1 === +amount
@@ -48,16 +48,15 @@ export default function Question(currentQuestion: Results) {
         ? toast("Uh oh!")
         : toast("Wrong! Better luck next time");
       setCorrect(currentQuestion.correct_answer);
-      setIncorrect(true);
       setTimeout(() => {
         dispatch(increment());
         setSelected("");
-        setIncorrect(false);
         setCorrect("");
       }, 2500);
     }
   };
 
+  // this use memo sets up a new randomized array of answers to select from, it should only run then the index of the question we are on changes
   const memoQuestion = useMemo(() => {
     const type = currentQuestion.type;
     if (type === "boolean") {
@@ -70,6 +69,7 @@ export default function Question(currentQuestion: Results) {
       return wrong;
     }
   }, [questionIndex]);
+
   return (
     <Container>
       <QuestionTitle>
@@ -87,7 +87,7 @@ export default function Question(currentQuestion: Results) {
               isSelected={selected === parse(q)}
               selected={selected}
               correct={correct}
-              answer={parse(q)}
+              answer={q}
               key={i}
               onClick={(e) => handleSelectAnswer(e)}
             >
@@ -102,7 +102,11 @@ export default function Question(currentQuestion: Results) {
         <ActionButton text={"Skip Question"}></ActionButton>
       </ButtonWrapper>
       <QuestionTitle size={2}>Correct Answers: {score}</QuestionTitle>
-      <ActionButton text={"Reset Quiz"} action={reset}></ActionButton>
+      <ActionButton
+        text={"Reset Quiz"}
+        margin={0.05}
+        action={reset}
+      ></ActionButton>
     </Container>
   );
 }
