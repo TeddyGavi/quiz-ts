@@ -6,7 +6,10 @@ interface TitleProps {
 }
 
 interface ChoiceProps {
-  selected?: boolean;
+  isSelected: boolean;
+  selected: string;
+  correct: string;
+  answer: string;
 }
 
 export const QuestionTitle = styled.h4<TitleProps>`
@@ -58,10 +61,13 @@ export const Choice = styled.li<ChoiceProps>`
     font-weight: bold;
   }
 
-  ${({ selected }) =>
-    selected &&
+  ${({ isSelected }) =>
+    isSelected &&
     `background-color: var(--neonPink);
     cursor: pointer;
     box-shadow: 0px 0px 5px var(--white);
     font-weight: bold;`}
+
+  ${({ correct, answer }) =>
+    correct === answer && `background-color: darkgreen`}
 `;

@@ -24,6 +24,9 @@ const scoreSlice = createSlice({
     builder.addCase(indexActions.reset, (state) => {
       state.score = 0;
     });
+    builder.addCase(indexActions.startOver, (state) => {
+      state.score = 0;
+    });
   },
 });
 export const scoreActions = scoreSlice.actions;

@@ -22,6 +22,8 @@ export default function Question(currentQuestion: Results) {
   const amount = useAppSelector((state) => state.amount.amount);
 
   const [selected, setSelected] = useState("");
+  const [correct, setCorrect] = useState("");
+  const [incorrect, setIncorrect] = useState(false);
 
   const handleSelectAnswer = (
     e: React.MouseEvent<HTMLLIElement, MouseEvent>
@@ -33,18 +35,25 @@ export default function Question(currentQuestion: Results) {
       questionIndex + 1 === +amount
         ? toast("Finished strong, nice!")
         : toast("Right! Ready for the next Question?");
+
+      setCorrect(currentQuestion.correct_answer);
       setTimeout(() => {
         dispatch(plusOne());
         dispatch(increment());
         setSelected("");
+        setCorrect("");
       }, 2500);
     } else {
       questionIndex + 1 === +amount
         ? toast("Uh oh!")
         : toast("Wrong! Better luck next time");
+      setCorrect(currentQuestion.correct_answer);
+      setIncorrect(true);
       setTimeout(() => {
         dispatch(increment());
         setSelected("");
+        setIncorrect(false);
+        setCorrect("");
       }, 2500);
     }
   };
@@ -75,7 +84,10 @@ export default function Question(currentQuestion: Results) {
         {memoQuestion.map((q, i) => {
           return (
             <Choice
-              selected={selected === q}
+              isSelected={selected === parse(q)}
+              selected={selected}
+              correct={correct}
+              answer={parse(q)}
               key={i}
               onClick={(e) => handleSelectAnswer(e)}
             >
