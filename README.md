@@ -5,6 +5,7 @@
 - simple SPA where you first select options for a quiz, then you are directed through the Quiz of your options one question at a time
 - Users can chose defaults if they want (10 random questions)
 - using Open [Trivia DB API](https://opentdb.com/)
+- I am not focusing on styling here! just very basic and simple styles, this is not a CSS show piece this is more about using REDUX toolkit and learning query build and caching Thanks!
 
 ## Documenting the process
 
@@ -48,3 +49,16 @@
 - handling error states is messy currently
 - NOTICED a bug where if you request one question the app proceeds to end the quiz immediately, I am sure this is linked to how i am handling the index navigation,
 - thats all for now!
+
+### Wednesday March 29th, 2023
+
+- Fixed some small errors as the score slice wasn't updated on the startOver action
+- cleaned up some unused code
+- adding the green highlight when the submit button is pressed
+- added some extra props to the action button and started writing some JSDOC
+- the MVP is basically done, I am going to move onto to a deeper project
+- in the future, user support would be good to add
+- clean up the redux slice and redux store
+- add js doc to everything to allow more understanding of the code
+
+#### Feel free to add any comments or suggestions that will help me understand Redux better or in a more efficient way. One thing I struggled with was how to organize the file structure, and another was how to work with cached data and the api slice builder.
